@@ -1867,6 +1867,10 @@ class-utils@^0.3.5:
     isobject "^3.0.0"
     static-extend "^0.1.1"
 
+classnames@^2.2.6:
+  version "2.2.6"
+  resolved "https://registry.yarnpkg.com/classnames/-/classnames-2.2.6.tgz#43935bffdd291f326dad0a205309b38d00f650ce"
+
 clean-css@4.2.x:
   version "4.2.1"
   resolved "https://registry.yarnpkg.com/clean-css/-/clean-css-4.2.1.tgz#2d411ef76b8569b6d0c84068dabe85b0aa5e5c17"
@@ -4812,6 +4816,10 @@ jsx-ast-utils@^2.0.1:
   dependencies:
     array-includes "^3.0.3"
 
+just-range@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/just-range/-/just-range-2.1.0.tgz#b8738839878f80670e5a41ba9bfdc5ea7ebde273"
+
 killable@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/killable/-/killable-1.0.1.tgz#4c8ce441187a061c7474fb87ca08e2a638194892"
@@ -4951,6 +4959,10 @@ lodash.camelcase@^4.3.0:
 lodash.debounce@^4.0.8:
   version "4.0.8"
   resolved "https://registry.yarnpkg.com/lodash.debounce/-/lodash.debounce-4.0.8.tgz#82d79bff30a67c4005ffd5e2515300ad9ca4d7af"
+
+lodash.difference@^4.5.0:
+  version "4.5.0"
+  resolved "https://registry.yarnpkg.com/lodash.difference/-/lodash.difference-4.5.0.tgz#9ccb4e505d486b91651345772885a2df27fd017c"
 
 lodash.memoize@^4.1.2:
   version "4.1.2"
@@ -6688,7 +6700,7 @@ react-dev-utils@^6.0.4:
     strip-ansi "4.0.0"
     text-table "0.2.0"
 
-react-dom@16.5.2:
+react-dom@^16.5.2:
   version "16.5.2"
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-16.5.2.tgz#b69ee47aa20bab5327b2b9d7c1fe2a30f2cfa9d7"
   dependencies:
@@ -6700,6 +6712,15 @@ react-dom@16.5.2:
 react-error-overlay@^5.0.4:
   version "5.0.4"
   resolved "https://registry.yarnpkg.com/react-error-overlay/-/react-error-overlay-5.0.4.tgz#39cf184d770f98b65a2ee59a779d03b8d092b69e"
+
+react-piano@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/react-piano/-/react-piano-3.1.0.tgz#312571395b5c4d216e9e51023e5c0143c7aa9288"
+  dependencies:
+    classnames "^2.2.6"
+    just-range "^2.1.0"
+    lodash.difference "^4.5.0"
+    prop-types "^15.6.2"
 
 react-scripts@2.0.4:
   version "2.0.4"
@@ -6754,7 +6775,7 @@ react-scripts@2.0.4:
   optionalDependencies:
     fsevents "1.2.4"
 
-react@16.5.2:
+react@^16.5.2:
   version "16.5.2"
   resolved "https://registry.yarnpkg.com/react/-/react-16.5.2.tgz#19f6b444ed139baa45609eee6dc3d318b3895d42"
   dependencies:
@@ -7827,6 +7848,10 @@ to-regex@^3.0.1, to-regex@^3.0.2:
     extend-shallow "^3.0.2"
     regex-not "^1.0.2"
     safe-regex "^1.1.0"
+
+tone@^0.12.80:
+  version "0.12.80"
+  resolved "http://registry.npmjs.org/tone/-/tone-0.12.80.tgz#9a40fca603d02e189251db772ef6c7bf082e6c28"
 
 topo@2.x.x:
   version "2.0.2"
