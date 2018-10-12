@@ -12,7 +12,7 @@ import "./App.css";
 
 class App extends Component {
   state = {
-    synth: new Tone.Synth().toMaster()
+    currentSong: []
   };
 
   shuffle(a) {
@@ -32,26 +32,42 @@ componentDidMount = () => {
 }
 
   toneRowTester = () => {
+    console.log("it continues to go");
     const toneArray = [
       "C3",
       "D3",
       "E3",
       "F3",
       "G3",
-      "A4",
-      "B4",
+      "A3",
+      "B3",
       "C#3",
       "D#3",
       "F#3",
       "G#3",
-      "A#4"
+      "A#3"
     ];
+    var synth = new Tone.Synth().toMaster()
     let tempArray = this.shuffle(toneArray);
-    for (var i=0;i<tempArray;i++) {
-    this.synth.triggerAttack(i)
+    console.log(tempArray)
+    var n = 1
+    for (var i=0;i<tempArray.length;i++) {
+      console.log(tempArray[i])
+    synth.triggerAttackRelease(tempArray[i], 0.5, n)
+    n++
     }
+    this.setState({ currentSong: tempArray})
   }
 
+  repeatSong() {
+    var n = 1
+    var synth = new Tone.Synth().toMaster()
+    for (var i=0;i<this.setState.currentSong.length;i++) {
+      console.log(this.setState.currentSong[i])
+    synth.triggerAttackRelease(this.setState.currentSong[i], 0.5, n)
+    n++
+    }
+  }
   render() {
     return (
       <div>

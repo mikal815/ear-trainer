@@ -18,13 +18,13 @@ function Keyboard() {
       noteRange={{ first: firstNote, last: lastNote }}
       playNote={midiNumber => {
         var x = Tone.Frequency(midiNumber, "midi").toNote();
+        console.log(x)
         synth.triggerAttack(x);
-        // Play a given note - e notes below
       }}
       stopNote={midiNumber => {
         synth.triggerRelease();
       }}
-      width={1000}
+      width={1345}
       keyboardShortcuts={keyboardShortcuts}
     />
   );
