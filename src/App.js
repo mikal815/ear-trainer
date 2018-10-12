@@ -4,12 +4,16 @@ import Keyboard from "./components/Keyboard";
 import BackgroundImage from "./components/BackgroundImage";
 import PlayBox from "./components/PlayBox";
 
+import Tone from "tone";
+
 import "react-piano/dist/styles.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 
 class App extends Component {
-  state = {};
+  state = {
+    synth: new Tone.Synth().toMaster()
+  };
 
   shuffle(a) {
     var j, x, i;
@@ -22,7 +26,12 @@ class App extends Component {
     return a;
 }
 
-  toneRowGenerator = () => {
+
+componentDidMount = () => {
+  this.toneRowTester()
+}
+
+  toneRowTester = () => {
     const toneArray = [
       "C3",
       "D3",
@@ -38,7 +47,9 @@ class App extends Component {
       "A#4"
     ];
     let tempArray = this.shuffle(toneArray);
-    this.setState({ currentSong: tempArray})
+    for (var i=0;i<tempArray;i++) {
+    this.synth.triggerAttack(i)
+    }
   }
 
   render() {
