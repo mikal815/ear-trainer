@@ -19,7 +19,7 @@ function Keyboard() {
       playNote={(midiNumber) => {
         var x = Tone.Frequency(midiNumber, "midi").toNote()
         synth.triggerAttack(x);
-        // Play a given note - see notes below
+        // Play a given note - e notes below
       }}
       stopNote={(midiNumber) => {
         synth.triggerRelease();
