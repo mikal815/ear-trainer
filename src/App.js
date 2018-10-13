@@ -113,7 +113,9 @@ componentDidMount = () => {
       <div>
         <Header winstate={this.state.winstate} score={this.state.score}/>
         <BackgroundImage />
+        <div style={{height: "300px"}}>
         <Keyboard scorekeeper={this.scoreFunction}/>
+        </div>
         <PlayBox />
       </div>
     );
