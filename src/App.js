@@ -17,6 +17,7 @@ class App extends Component {
  this.scoreFunction = this.scoreFunction.bind(this)
 }
   state = {
+    winstate: "",
     score: 0,
     currentSong: [],
     currentInput: []
@@ -79,27 +80,28 @@ componentDidMount = () => {
   scoreFunction = (x) => {
     console.log(x)
     this.setState(prevState => ({
-     currentInput: [...prevState.currentInput, x]
+     currentInput: [...prevState.currentInput, x],
+     winstate: ""
     }), () => {
       var y = this.state.currentInput.length - 1
       console.log(this.state.currentInput[y], this.state.currentSong[y])
       if (this.state.currentInput[y] === this.state.currentSong[y]) {
         if (this.state.currentInput.length === this.state.currentSong.length){
-        // alert("Success!");
         this.toneRowTester()
         this.setState(prevState => ({
           score: this.state.score + 1,
-          currentInput: []
+          currentInput: [],
+          winstate: "Success!"
          }) )
         }
         else {
-          console.log(this.state.currentInput, this.state.currentSong)
-        }
       }
+    }
       else {
         // alert("Wrong Note!");
         this.setState(prevState => ({
-          currentInput: []
+          currentInput: [],
+          winstate: "Wrong Note!"
          }))
       }
     })
@@ -110,7 +112,7 @@ componentDidMount = () => {
   render() {
     return (
       <div>
-        <Header score={this.state.score}/>
+        <Header winstate={this.state.winstate} score={this.state.score}/>
         <BackgroundImage />
         <Keyboard scorekeeper={this.scoreFunction}/>
         <PlayBox />
