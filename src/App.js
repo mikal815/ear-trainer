@@ -3,6 +3,7 @@ import Header from "./components/Header";
 import Keyboard from "./components/Keyboard";
 import BackgroundImage from "./components/BackgroundImage";
 import PlayBox from "./components/PlayBox";
+import Replay from "./components/Replay"
 
 import Tone from "tone";
 
@@ -110,10 +111,6 @@ componentDidMount = () => {
     
   }
 
-
-class App extends Component {
-  state = {};
-
   render() {
     return (
       <div>
@@ -122,9 +119,10 @@ class App extends Component {
         <Keyboard scorekeeper={this.scoreFunction}/>
         <Container>
           <Row>
-            <Col size="lg-4">
+            {/* <Col size="lg-4">
                 <PlayBox />
-            </Col>
+            </Col> */}
+            <Replay />
           </Row>
         </Container>
       </div>
