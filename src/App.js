@@ -36,7 +36,7 @@ class App extends Component {
 
 
 componentDidMount = () => {
-  this.toneRowTester()
+  // this.toneRowTester()
 }
 
   toneRowTester = () => {
@@ -98,7 +98,6 @@ componentDidMount = () => {
       }
     }
       else {
-        // alert("Wrong Note!");
         this.setState(prevState => ({
           currentInput: [],
           winstate: "Wrong Note!"
