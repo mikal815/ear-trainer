@@ -13,13 +13,14 @@ import { Piano, KeyboardShortcuts, MidiNumbers } from "react-piano";
   });
 
   var synth = new Tone.Synth().toMaster();
+
   const Keyboard = props => (
     <Piano
       noteRange={{ first: firstNote, last: lastNote }}
       playNote={midiNumber => {
         var x = Tone.Frequency(midiNumber, "midi").toNote();
-        console.log(x);
         synth.triggerAttack(x);
+        // Play a given note - e notes below
       }}
       onPlayNoteInput={(midiNumber) => {
         var x = Tone.Frequency(midiNumber, "midi").toNote();

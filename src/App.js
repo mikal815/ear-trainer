@@ -6,6 +6,8 @@ import PlayBox from "./components/PlayBox";
 
 import Tone from "tone";
 
+import { Container, Row, Col } from "./components/Grid";
+
 import "react-piano/dist/styles.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
@@ -106,17 +108,19 @@ componentDidMount = () => {
     })
     
   }
-
-
   render() {
     return (
       <div>
         <Header winstate={this.state.winstate} score={this.state.score}/>
         <BackgroundImage />
-        <div style={{height: "300px"}}>
         <Keyboard scorekeeper={this.scoreFunction}/>
-        </div>
-        <PlayBox />
+        <Container>
+          <Row>
+            <Col size="lg-4">
+                <PlayBox />
+            </Col>
+          </Row>
+        </Container>
       </div>
     );
   }
