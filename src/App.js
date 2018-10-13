@@ -76,7 +76,7 @@ componentDidMount = () => {
   }
 
 
-  scoreFunction(x) {
+  scoreFunction = (x) => {
     console.log(x)
     this.setState(prevState => ({
      currentInput: [...prevState.currentInput, x]
@@ -85,22 +85,22 @@ componentDidMount = () => {
       console.log(this.state.currentInput[y], this.state.currentSong[y])
       if (this.state.currentInput[y] === this.state.currentSong[y]) {
         if (this.state.currentInput.length === this.state.currentSong.length){
-        alert("Success!");
+        // alert("Success!");
         this.toneRowTester()
-        // this.setState({
-        //   score: this.prevState.score + 1,
-        //   currentInput: []
-        //  })
+        this.setState(prevState => ({
+          score: this.state.score + 1,
+          currentInput: []
+         }) )
         }
         else {
           console.log(this.state.currentInput, this.state.currentSong)
         }
       }
       else {
-        alert("Wrong Note!");
-        // this.setState({
-        //   currentInput: []
-        //  })
+        // alert("Wrong Note!");
+        this.setState(prevState => ({
+          currentInput: []
+         }))
       }
     })
     
