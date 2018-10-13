@@ -2,7 +2,7 @@ import React from "react";
 
 const Header = props => {
   const { branding } = props;
-  //   const { score } = props;
+    const { score } = props;
 
   return (
     <nav className="navbar navbar-expand-sm navbar-dark bg-dark  py-2">
@@ -17,6 +17,11 @@ const Header = props => {
                 Level: Easy
               </a>
             </li>
+            <li className="nav-item">
+              <a href="/" className="nav-link">
+                Score: {score}
+              </a>
+            </li>
           </ul>
         </div>
       </div>
@@ -25,7 +30,8 @@ const Header = props => {
 };
 
 Header.defaultProps = {
-  branding: "Ear Trainer"
+  branding: "Ear Trainer",
+  score: 0
 };
 
 export default Header;

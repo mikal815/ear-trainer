@@ -9,7 +9,7 @@ const PlayBox = () => (
         <div className="playbox-body">
             <div className="perfect-fifth">
                 <h5>Perfect Fifth: </h5>
-                <button className="btn" onClick>
+                <button className="btn">
                     <i className="far fa-play-circle"></i>
                 </button>
             </div>

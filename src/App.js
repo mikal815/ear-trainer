@@ -11,8 +11,15 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 
 class App extends Component {
+
+  constructor() {
+    super()
+ this.scoreFunction = this.scoreFunction.bind(this)
+}
   state = {
-    currentSong: []
+    score: 0,
+    currentSong: [],
+    currentInput: []
   };
 
   shuffle(a) {
@@ -32,7 +39,6 @@ componentDidMount = () => {
 }
 
   toneRowTester = () => {
-    console.log("it continues to go");
     const toneArray = [
       "C3",
       "D3",
@@ -68,12 +74,45 @@ componentDidMount = () => {
     n++
     }
   }
+
+
+  scoreFunction(x) {
+    console.log(x)
+    this.setState(prevState => ({
+     currentInput: [...prevState.currentInput, x]
+    }), () => {
+      var y = this.state.currentInput.length - 1
+      console.log(this.state.currentInput[y], this.state.currentSong[y])
+      if (this.state.currentInput[y] === this.state.currentSong[y]) {
+        if (this.state.currentInput.length === this.state.currentSong.length){
+        alert("Success!");
+        this.toneRowTester()
+        // this.setState({
+        //   score: this.prevState.score + 1,
+        //   currentInput: []
+        //  })
+        }
+        else {
+          console.log(this.state.currentInput, this.state.currentSong)
+        }
+      }
+      else {
+        alert("Wrong Note!");
+        // this.setState({
+        //   currentInput: []
+        //  })
+      }
+    })
+    
+  }
+
+
   render() {
     return (
       <div>
-        <Header />
+        <Header score={this.state.score}/>
         <BackgroundImage />
-        <Keyboard />
+        <Keyboard scorekeeper={this.scoreFunction}/>
         <PlayBox />
       </div>
     );

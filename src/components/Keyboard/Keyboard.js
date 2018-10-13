@@ -2,9 +2,10 @@ import React from "react";
 import Tone from "tone";
 import { Piano, KeyboardShortcuts, MidiNumbers } from "react-piano";
 
-function Keyboard() {
+
+
   const firstNote = MidiNumbers.fromNote("c3");
-  const lastNote = MidiNumbers.fromNote("f5");
+  const lastNote = MidiNumbers.fromNote("c5");
   const keyboardShortcuts = KeyboardShortcuts.create({
     firstNote: firstNote,
     lastNote: lastNote,
@@ -12,15 +13,17 @@ function Keyboard() {
   });
 
   var synth = new Tone.Synth().toMaster();
-
-  return (
+  const Keyboard = props => (
     <Piano
       noteRange={{ first: firstNote, last: lastNote }}
       playNote={midiNumber => {
         var x = Tone.Frequency(midiNumber, "midi").toNote();
-        console.log(x)
+        console.log(x);
         synth.triggerAttack(x);
       }}
+      onPlayNoteInput={(midiNumber) => {
+        var x = Tone.Frequency(midiNumber, "midi").toNote();
+         props.scorekeeper(x) }}
       stopNote={midiNumber => {
         synth.triggerRelease();
       }}
@@ -28,6 +31,6 @@ function Keyboard() {
       keyboardShortcuts={keyboardShortcuts}
     />
   );
-}
+
 
 export default Keyboard;
