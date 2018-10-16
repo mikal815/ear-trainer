@@ -67,8 +67,7 @@ class App extends Component {
   
   componentDidMount = () => {
     // this.toneRowTester()
-    console.log(this.state.height);
-    
+    console.log(this.state.width);
     window.addEventListener("resize", this.updateDimensions);
   }
 
@@ -83,20 +82,20 @@ class App extends Component {
     });
   }
   
-  songGeneratorEasy = () => {
-    const toneArray = this.fullKeyboardArray.slice(0,11);
-    var synth = new Tone.Synth().toMaster()
-    let tempArray = this.shuffle(toneArray);
-    let tempArray2 = tempArray.slice(0,1)
-    console.log(tempArray2)
-    var n = 1
-    for (var i=0;i<tempArray2.length;i++) {
-      console.log(tempArray2[i])
-      synth.triggerAttackRelease(tempArray2[i], 0.5, n)
-      n++
-    }
-    this.setState({ currentSong: tempArray2})
-  }
+  // songGeneratorEasy = () => {
+  //   const toneArray = this.fullKeyboardArray.slice(0,11);
+  //   var synth = new Tone.Synth().toMaster()
+  //   let tempArray = this.shuffle(toneArray);
+  //   let tempArray2 = tempArray.slice(0,1)
+  //   console.log(tempArray2)
+  //   var n = 1
+  //   for (var i=0;i<tempArray2.length;i++) {
+  //     console.log(tempArray2[i])
+  //     synth.triggerAttackRelease(tempArray2[i], 0.5, n)
+  //     n++
+  //   }
+  //   this.setState({ currentSong: tempArray2})
+  // }
 
   songGeneratorEasy = () => {
     const toneArray = this.fullKeyboardArray.slice(0,11);
