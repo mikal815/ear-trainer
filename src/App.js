@@ -24,7 +24,33 @@ class App extends Component {
     score: 0,
     currentSong: [],
     currentInput: [],
-    winSize: window.innerWidth
+    winSize: window.innerWidth,
+    fullKeyboardArray: [
+      "C3",
+      "D3",
+      "E3",
+      "F3",
+      "G3",
+      "A3",
+      "B3",
+      "C#3",
+      "D#3",
+      "F#3",
+      "G#3",
+      "A#3",
+      "C4",
+      "D4",
+      "E4",
+      "F4",
+      "G4",
+      "A4",
+      "B4",
+      "C#4",
+      "D#4",
+      "F#4",
+      "G#4",
+      "A#4"
+    ]
   };
   
   shuffle(a) {
@@ -57,21 +83,23 @@ class App extends Component {
     });
   }
   
-  songGeneratorHard = () => {
-    const toneArray = [
-      "C3",
-      "D3",
-      "E3",
-      "F3",
-      "G3",
-      "A3",
-      "B3",
-      "C#3",
-      "D#3",
-      "F#3",
-      "G#3",
-      "A#3"
-    ];
+  songGeneratorEasy = () => {
+    const toneArray = this.fullKeyboardArray.slice(0,11);
+    var synth = new Tone.Synth().toMaster()
+    let tempArray = this.shuffle(toneArray);
+    let tempArray2 = tempArray.slice(0,1)
+    console.log(tempArray2)
+    var n = 1
+    for (var i=0;i<tempArray2.length;i++) {
+      console.log(tempArray2[i])
+      synth.triggerAttackRelease(tempArray2[i], 0.5, n)
+      n++
+    }
+    this.setState({ currentSong: tempArray2})
+  }
+
+  songGeneratorEasy = () => {
+    const toneArray = this.fullKeyboardArray.slice(0,11);
     var synth = new Tone.Synth().toMaster()
     let tempArray = this.shuffle(toneArray);
     let tempArray2 = tempArray.slice(0,1)
