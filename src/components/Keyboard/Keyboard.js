@@ -19,6 +19,7 @@ const Keyboard = props => (
       playNote={midiNumber => {
         var x = Tone.Frequency(midiNumber, "midi").toNote();
         synth.triggerAttack(x);
+        // Play a given note - e notes below
       }}
       onPlayNoteInput={midiNumber => {
         var x = Tone.Frequency(midiNumber, "midi").toNote();
@@ -27,7 +28,7 @@ const Keyboard = props => (
       stopNote={midiNumber => {
         synth.triggerRelease();
       }}
-      width={1345}
+      width={props.width}
       keyboardShortcuts={keyboardShortcuts}
     />
   </div>
