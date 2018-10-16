@@ -22,7 +22,8 @@ class App extends Component {
     winstate: "",
     score: 0,
     currentSong: [],
-    currentInput: []
+    currentInput: [],
+    winSize: 1345
   };
 
   shuffle(a) {
@@ -58,14 +59,15 @@ componentDidMount = () => {
     ];
     var synth = new Tone.Synth().toMaster()
     let tempArray = this.shuffle(toneArray);
-    console.log(tempArray)
+    let tempArray2 = tempArray.slice(0,1)
+    console.log(tempArray2)
     var n = 1
-    for (var i=0;i<tempArray.length;i++) {
-      console.log(tempArray[i])
-    synth.triggerAttackRelease(tempArray[i], 0.5, n)
+    for (var i=0;i<tempArray2.length;i++) {
+      console.log(tempArray2[i])
+    synth.triggerAttackRelease(tempArray2[i], 0.5, n)
     n++
     }
-    this.setState({ currentSong: tempArray})
+    this.setState({ currentSong: tempArray2})
   }
 
   repeatSong() {
@@ -77,7 +79,6 @@ componentDidMount = () => {
     n++
     }
   }
-
 
   scoreFunction = (x) => {
     console.log(x)
@@ -113,7 +114,7 @@ componentDidMount = () => {
       <div>
         <Header winstate={this.state.winstate} score={this.state.score}/>
         <BackgroundImage />
-        <Keyboard scorekeeper={this.scoreFunction}/>
+        <Keyboard width={this.state.winSize} scorekeeper={this.scoreFunction}/>
         <Container>
           <Row>
             <Col size="lg-4">

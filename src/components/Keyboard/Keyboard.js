@@ -28,8 +28,7 @@ import { Piano, KeyboardShortcuts, MidiNumbers } from "react-piano";
       stopNote={midiNumber => {
         synth.triggerRelease();
       }}
-      activeNotes={[44, 45,]}
-      // width={1345}
+      width={props.width}
       keyboardShortcuts={keyboardShortcuts}
     />
   );
