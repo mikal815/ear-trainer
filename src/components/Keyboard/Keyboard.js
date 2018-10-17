@@ -13,7 +13,7 @@ const keyboardShortcuts = KeyboardShortcuts.create({
 var synth = new Tone.Synth().toMaster();
 
 const Keyboard = props => (
-  <div className="container" style={{ width: "100%", height: "auto" }}>
+  <div className="container" style={{ width: "100%", height: "auto", margin: 0, padding: "0" }}>
     <Piano
       noteRange={{ first: firstNote, last: lastNote }}
       playNote={midiNumber => {
