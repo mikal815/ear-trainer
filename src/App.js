@@ -4,6 +4,7 @@ import Keyboard from "./components/Keyboard";
 import BackgroundImage from "./components/BackgroundImage";
 import PlayBox from "./components/PlayBox";
 import { Container, Row, Col } from "./components/Grid";
+import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 
 import Tone from "tone";
 
@@ -19,11 +20,13 @@ class App extends Component {
     this.updateDimensions = this.updateDimensions.bind(this)
     this.timerFunction = this.timerFunction.bind(this);
     this.startTimer = this.startTimer.bind(this);
+    this.toggle = this.toggle.bind(this);
   }
   state = {
     winstate: "",
     score: 0,
     timer: 0,
+    dropdownOpen: false,
     countdown: 120,
     currentSong: [],
     currentInput: [],
@@ -101,6 +104,13 @@ class App extends Component {
       });
       
     }
+  }
+
+  //Handles dropdown
+  toggle() {
+    this.setState(prevState => ({
+      dropdownOpen: !prevState.dropdownOpen
+    }));
   }
 
     // Song generator functions
@@ -223,6 +233,20 @@ class App extends Component {
       <Row>
       <Col size="lg-4">
       <PlayBox />
+      <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
+        <DropdownToggle caret>
+          Mode
+        </DropdownToggle>
+        <DropdownMenu>
+          <DropdownItem >Free Play</DropdownItem>
+          <DropdownItem divider />
+          <DropdownItem>Intervals</DropdownItem>
+          <DropdownItem divider />
+          <DropdownItem>Major Arpeggio</DropdownItem>
+          <DropdownItem divider />
+          <DropdownItem>Tone Rows</DropdownItem>
+        </DropdownMenu>
+      </Dropdown>
       </Col>
       </Row>
       </Container>
