@@ -17,7 +17,8 @@ class App extends Component {
     super()
     this.scoreFunction = this.scoreFunction.bind(this)
     this.updateDimensions = this.updateDimensions.bind(this)
-    this.countDown = this.countDown.bind(this);
+    this.timerFunction = this.timerFunction.bind(this);
+    this.startTimer = this.startTimer.bind(this);
   }
   state = {
     winstate: "",
@@ -59,6 +60,7 @@ class App extends Component {
   
   componentDidMount = () => {
     // this.toneRowTester()
+    this.startTimer()
     console.log(this.state.width);
     window.addEventListener("resize", this.updateDimensions);
   }
@@ -85,7 +87,7 @@ class App extends Component {
   }
 
   timerFunction = () => {
-    let countdownTimer = (this.state.countdown - 1)/1000;
+    let countdownTimer = this.state.countdown - 1;
     this.setState({
       countdown: countdownTimer,
     });
@@ -94,6 +96,10 @@ class App extends Component {
     if (this.state.countdown === 0) { 
       clearInterval(this.timer);
       // this.highScoreFunction()
+      this.setState({
+        countdown: 120,
+      });
+      
     }
   }
 
@@ -209,7 +215,7 @@ class App extends Component {
   render() {
     return (
       <div>
-      <Header winstate={this.state.winstate} score={this.state.score} timer={this.state.timer}>
+      <Header winstate={this.state.winstate} score={this.state.score} timer={this.state.countdown}>
       </Header>
       <BackgroundImage />
       <Keyboard width={this.state.winSize} scorekeeper={this.scoreFunction}/>
