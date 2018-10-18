@@ -1,0 +1,28 @@
+.background {
+  background-image: url(http://www.avgroup-sc.com/images/solutions-images/img-solutions-sound-systems.jpg);
+  height: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  opacity: 0.7;
+  color: white;
+  width: 100%;
+  padding: 180px 0px;
+}
+
+.scoreCard {
+  background-color: rgba(0, 0, 0, 0.5);
+  height: auto;
+  position: relative;
+  top: 148px;
+}
+
+h1 {
+  margin: 0;
+  margin-bottom: 30px;
+  font-size: 4rem;
+  display: block;
+  font-size: 2em;
+  font-weight: bold;
+  text-align: center;
+}
