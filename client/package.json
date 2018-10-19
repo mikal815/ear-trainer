@@ -9,6 +9,7 @@
     "react-dom": "^16.5.2",
     "react-piano": "^3.1.0",
     "react-scripts": "2.0.4",
+    "reactstrap": "^6.5.0",
     "tone": "^0.12.80"
   },
   "scripts": {
