@@ -10,7 +10,18 @@ const keyboardShortcuts = KeyboardShortcuts.create({
   keyboardConfig: KeyboardShortcuts.HOME_ROW
 });
 
-var synth = new Tone.Synth().toMaster();
+var synth = new Tone.Synth({
+	"oscillator" : {
+		"type" : "pwm",
+		"modulationFrequency" : 0.2
+	},
+	"envelope" : {
+		"attack" : 0.02,
+		"decay" : 0.1,
+		"sustain" : 0.2,
+		"release" : 0.9,
+	}
+}).toMaster();
 
 const Keyboard = props => (
   <div className="container" style={{ width: "100%", height: "auto", margin: 0, padding: "0" }}>
