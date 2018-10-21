@@ -161,18 +161,30 @@ class App extends Component {
   }
   
   songGeneratorEasy = () => {
-    const toneArray = this.state.fullKeyboardArray.slice(0,11);
-    var synth = new Tone.Synth().toMaster()
+    const toneArray = this.state.fullKeyboardArray.slice(1,14);
+    console.log(toneArray)
+    var synth = new Tone.Synth({
+      "oscillator" : {
+        "type" : "pwm",
+        "modulationFrequency" : 0.2
+      },
+      "envelope" : {
+        "attack" : 0.02,
+        "decay" : 0.1,
+        "sustain" : 0.2,
+        "release" : 0.9,
+      }
+    }).toMaster()
     let tempArray = this.shuffle(toneArray);
-    let tempArray2 = tempArray.slice(0,2)
+    let tempArray2 = ["C3", tempArray[1]]
     console.log(tempArray2)
-    var n = 2
+    var n = 1
     for (var i=0;i<tempArray2.length;i++) {
       console.log(tempArray2[i])
       var m = "+" + n
       console.log(m)
-      synth.triggerAttackRelease(tempArray2[i], 0.5, m)
-      n=n+2
+      synth.triggerAttackRelease(tempArray2[i], 1, m)
+      n=n+1
     }
     this.setState({ currentSong: tempArray2})
   }
@@ -183,43 +195,57 @@ class App extends Component {
     this.state.fullKeyboardArray[baseNote],
     this.state.fullKeyboardArray[baseNote + 4],
     this.state.fullKeyboardArray[baseNote + 7]]
-    var synth = new Tone.Synth().toMaster()
+    var synth = new Tone.Synth({
+      "oscillator" : {
+        "type" : "pwm",
+        "modulationFrequency" : 0.2
+      },
+      "envelope" : {
+        "attack" : 0.02,
+        "decay" : 0.1,
+        "sustain" : 0.2,
+        "release" : 0.9,
+      }
+    }).toMaster()
     toneArray.push()
     console.log(toneArray)
-    var n = 2
+    var n = 1
     for (var i=0;i<toneArray.length;i++) {
       var m = "+" + n
       console.log(m)
       console.log(toneArray[i])
-      synth.triggerAttackRelease(toneArray[i], 0.5, m)
-      n=n+2
+      synth.triggerAttackRelease(toneArray[i], 1, m)
+      n=n+1
     }
     this.setState({ currentSong: toneArray})
   }
 
   songGeneratorHard = () => {
-    const toneArray =  this.state.fullKeyboardArray.slice(0,11);
-    var synth = new Tone.Synth().toMaster()
+    const toneArray =  this.state.fullKeyboardArray.slice(0,12);
+    var synth = new Tone.Synth({
+      "oscillator" : {
+        "type" : "pwm",
+        "modulationFrequency" : 0.2
+      },
+      "envelope" : {
+        "attack" : 0.02,
+        "decay" : 0.1,
+        "sustain" : 0.2,
+        "release" : 0.9,
+      }
+    }).toMaster()
     let tempArray = this.shuffle(toneArray);
     console.log(tempArray)
-    var n = 2
+    var n = 1
     for (var i=0;i<tempArray.length;i++) {
       var m = "+" + n
       console.log(m)
       console.log(tempArray[i])
-      synth.triggerAttackRelease(tempArray[i], 0.5, m)
-      n=n+2
+      synth.triggerAttackRelease(tempArray[i], 1, m)
+      n=n+1
     }
     this.setState({ currentSong: tempArray})
   }
-
-  //So, plan right now is to have the appropriate songGenerator function fire when a level is selected
-  //Additionally, a timer goes off, and you have to see how many you can complete in, say, 2 minutes.
-  //I'd prefer a system based on number of mistakes, but timer-based methods would probably work better
-  //With the musically illiterate industry pros we'll be presenting to.
-  //Once the timer hits zero, the user's score is added to the database, a modal pops up that shows their
-  //relative ranking (three above, three below). Boom, app's functional, everybody goes home happy
-  
 
   //Currently not in use, but will probably incorporate into later model.
   repeatSong() {
@@ -243,12 +269,14 @@ class App extends Component {
       console.log(this.state.currentInput[y], this.state.currentSong[y])
       if (this.state.currentInput[y] === this.state.currentSong[y]) {
         if (this.state.currentInput.length === this.state.currentSong.length){
-          this.modeHandler(this.state.currentMode)
+          
           this.setState(prevState => ({
             score: this.state.score + 1,
             currentInput: [],
             winstate: "Success!"
           }) )
+
+          setTimeout(this.modeHandler(this.state.currentMode), 3000)
         }
         else {
         }
