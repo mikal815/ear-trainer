@@ -1,4 +1,6 @@
 import React from "react";
+import Login from '../Login/Login'
+import './Header.css'
 
 const Header = props => {
   const { branding } = props;
@@ -7,6 +9,7 @@ const Header = props => {
   
   return (
     <nav className="navbar navbar-expand-sm navbar-dark bg-dark  py-2">
+    
     <div className="container">
     <a href="/" className="navbar-brand">
     {branding}
@@ -47,6 +50,11 @@ const Header = props => {
     Score: {score}
     </a>
     </li>
+
+    <li>
+    <Login></Login>
+    </li>
+
     </ul>
     </div>
     </div>
