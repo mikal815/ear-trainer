@@ -294,13 +294,6 @@ class App extends Component {
     return (
       <div>
       <Header winstate={this.state.winstate} score={this.state.score} timer={this.state.countdown}>
-      </Header>
-      <BackgroundImage />
-      <Keyboard width={this.state.winSize} scorekeeper={this.scoreFunction}/>
-      <Container>
-      <Row>
-      <Col size="lg-4">
-      <PlayBox />
       <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
         <DropdownToggle caret>
           Mode
@@ -315,6 +308,27 @@ class App extends Component {
           <DropdownItem value={"tonerows"} onClick={this.selectFunction}>Tone Rows</DropdownItem>
         </DropdownMenu>
       </Dropdown>
+      </Header>
+      <BackgroundImage />
+      <Keyboard width={this.state.winSize} scorekeeper={this.scoreFunction}/>
+      <Container>
+      <Row>
+      <Col size="lg-4">
+      <PlayBox />
+      {/* <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
+        <DropdownToggle caret>
+          Mode
+        </DropdownToggle>
+        <DropdownMenu>
+          <DropdownItem value={"freeplay"} onClick={this.selectFunction}>Free Play</DropdownItem>
+          <DropdownItem divider />
+          <DropdownItem value={"intervals"} onClick={this.selectFunction}>Intervals</DropdownItem>
+          <DropdownItem divider />
+          <DropdownItem value={"arpeggiosMajor"} onClick={this.selectFunction}>Major Arpeggio</DropdownItem>
+          <DropdownItem divider />
+          <DropdownItem value={"tonerows"} onClick={this.selectFunction}>Tone Rows</DropdownItem>
+        </DropdownMenu>
+      </Dropdown> */}
       </Col>
       </Row>
       </Container>
