@@ -1,25 +1,21 @@
 import React from "react";
 import Tone from "tone";
-import { Piano, KeyboardShortcuts, MidiNumbers } from "react-piano";
+import { Piano,  MidiNumbers } from "react-piano";
 
 const firstNote = MidiNumbers.fromNote("c3");
 const lastNote = MidiNumbers.fromNote("c5");
-const keyboardShortcuts = KeyboardShortcuts.create({
-  firstNote: firstNote,
-  lastNote: lastNote,
-  keyboardConfig: KeyboardShortcuts.HOME_ROW
-});
+
 
 var synth = new Tone.Synth({
 	"oscillator" : {
-		"type" : "pwm",
-		"modulationFrequency" : 0.2
+		"type" : "triangle",
+		"modulationFrequency" : 0.5
 	},
 	"envelope" : {
 		"attack" : 0.02,
 		"decay" : 0.1,
 		"sustain" : 0.2,
-		"release" : 0.9,
+		"release" : 0.3,
 	}
 }).toMaster();
 
@@ -40,7 +36,6 @@ const Keyboard = props => (
         synth.triggerRelease();
       }}
       width={props.width}
-      keyboardShortcuts={keyboardShortcuts}
     />
   </div>
 );
