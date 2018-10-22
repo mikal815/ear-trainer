@@ -165,14 +165,14 @@ class App extends Component {
     console.log(toneArray)
     var synth = new Tone.Synth({
       "oscillator" : {
-        "type" : "pwm",
+        "type" : "triangle",
         "modulationFrequency" : 0.2
       },
       "envelope" : {
         "attack" : 0.02,
         "decay" : 0.1,
         "sustain" : 0.2,
-        "release" : 0.9,
+        "release" : 0.3,
       }
     }).toMaster()
     let tempArray = this.shuffle(toneArray);
@@ -197,14 +197,14 @@ class App extends Component {
     this.state.fullKeyboardArray[baseNote + 7]]
     var synth = new Tone.Synth({
       "oscillator" : {
-        "type" : "pwm",
+        "type" : "triangle",
         "modulationFrequency" : 0.2
       },
       "envelope" : {
         "attack" : 0.02,
         "decay" : 0.1,
         "sustain" : 0.2,
-        "release" : 0.9,
+        "release" : 0.3,
       }
     }).toMaster()
     toneArray.push()
@@ -224,14 +224,14 @@ class App extends Component {
     const toneArray =  this.state.fullKeyboardArray.slice(0,12);
     var synth = new Tone.Synth({
       "oscillator" : {
-        "type" : "pwm",
+        "type" : "triangle",
         "modulationFrequency" : 0.2
       },
       "envelope" : {
         "attack" : 0.02,
         "decay" : 0.1,
         "sustain" : 0.2,
-        "release" : 0.9,
+        "release" : 0.3,
       }
     }).toMaster()
     let tempArray = this.shuffle(toneArray);
