@@ -22,6 +22,7 @@ class App extends Component {
     this.startTimer = this.startTimer.bind(this);
     this.toggle = this.toggle.bind(this);
     this.selectFunction = this.selectFunction.bind(this);
+    this.highScoreFunction = this.highScoreFunction.bind(this);
   }
   state = {
     winstate: "",
@@ -97,10 +98,11 @@ class App extends Component {
     });
     if (this.state.countdown === 0) { 
       clearInterval(this.timer);
-      // this.highScoreFunction()
+      this.highScoreFunction()
       this.setState({
         currentMode: "",
         countdown: 120,
+        currentSong: []
       });
       
     }
@@ -161,7 +163,7 @@ class App extends Component {
   }
   
   songGeneratorEasy = () => {
-    const toneArray = this.state.fullKeyboardArray.slice(1,14);
+    const toneArray = this.state.fullKeyboardArray.slice(1,13);
     console.log(toneArray)
     var synth = new Tone.Synth({
       "oscillator" : {
@@ -288,7 +290,14 @@ class App extends Component {
         }))
       }
     })
-    
+  }
+
+  highScoreFunction() {
+    var score = this.state.score
+    //Stick the post for the score here
+    //Stick the get for all the scores here
+    //Stick the display function for the modal in here
+    this.setState({score: 0})
   }
   render() {
     return (
@@ -315,6 +324,7 @@ class App extends Component {
       <Row>
       <Col size="lg-4">
       <PlayBox />
+      
       {/* <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
         <DropdownToggle caret>
           Mode
