@@ -11,44 +11,46 @@ const Header = props => {
 
   return (
 
-
-    <div className="topbar d-flex align-items-center justify-content-md-around">
+    
+    <div className="row topbar align-items-center">
     
     
-    <div className="">
-      <a href="/" style={{"color": "#000000"}} className="title">
+    
+    <div className="col-sm-4">
+      <a href="/" style={{"color": "#000000", "font-weight": "bold"}} className="title">
        {branding}
       </a>
     </div>  
     
-    <div className="">
+    <div className="col">
     <a href="/" style={{"color": "#000000"}} className="title">
     {props.timer}
     </a>
     </div>
     
-    <div className="">
+    <div className="col">
     <a href="/" style={{"color": "#000000"}} className="title">
     {winstate}
     </a>
     </div>
     
-    <div className="title" style={{"color": "#000000"}}>
+    <div className="col title" style={{"color": "#000000"}}>
     {props.children}
     </div>
     
-    <div className="">
+    <div className="col">
     <a href="/" style={{"color": "#000000"}} className="title">
     Score: {score}
     </a>
     </div>
     
 
-    <div className="">
+    <div className="col" style={{}}>
     <Login></Login>
     </div>
     
   </div>
+  
     );
   };
   
