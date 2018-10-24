@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Header from "./components/Header";
 import Keyboard from "./components/Keyboard";
 import BackgroundImage from "./components/BackgroundImage";
-import PlayBox from "./components/PlayBox";
+// import PlayBox from "./components/PlayBox";
 import { Container, Row, Col } from "./components/Grid";
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 
@@ -323,7 +323,7 @@ class App extends Component {
       <Container>
       <Row>
       <Col size="lg-4">
-      <PlayBox />
+      {/* <PlayBox /> */}
       
       {/* <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
         <DropdownToggle caret>
