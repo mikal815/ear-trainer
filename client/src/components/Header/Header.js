@@ -47,7 +47,7 @@ const Header = props => {
   };
   
   Header.defaultProps = {
-    branding: "Ear Trainer",
+    branding: "Music To My Ears",
     score: 0
   };
   
