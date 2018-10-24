@@ -7,47 +7,53 @@ const Header = props => {
   const { score } = props;
   const {winstate} = props;
   
+  
+
   return (
-    <nav className="navbar navbar-expand-sm navbar-dark bg-dark  py-2">
+
+
+    <div className="topbar d-flex align-items-center justify-content-md-around">
     
-    <div className="container">
-    <a href="/" className="navbar-brand">
-    {branding}
-    </a>
-    <div>
-    <ul className="navbar-nav mr-auto">
-    <li className="nav-item">
-    <a href="/" className="nav-link">
+    
+    <div className="">
+      <a href="/" style={{"color": "#000000"}} className="title">
+       {branding}
+      </a>
+    </div>  
+    
+    <div className="">
+    <a href="/" style={{"color": "#000000"}} className="title">
     {props.timer}
     </a>
-    </li>
-    <li className="nav-item">
-    <a href="/" className="nav-link">
+    </div>
+    
+    <div className="">
+    <a href="/" style={{"color": "#000000"}} className="title">
     {winstate}
     </a>
-    </li>
-    <li className="nav-item">
+    </div>
+    
+    <div className="title" style={{"color": "#000000"}}>
     {props.children}
-    </li>
-    <li className="nav-item">
-    <a href="/" className="nav-link">
+    </div>
+    
+    <div className="">
+    <a href="/" style={{"color": "#000000"}} className="title">
     Score: {score}
     </a>
-    </li>
+    </div>
+    
 
-    <li>
+    <div className="">
     <Login></Login>
-    </li>
-
-    </ul>
     </div>
-    </div>
-    </nav>
+    
+  </div>
     );
   };
   
   Header.defaultProps = {
-    branding: "Ear Trainer",
+    branding: "Music to My Ears",
     score: 0
   };
   
