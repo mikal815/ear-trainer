@@ -8,6 +8,7 @@ class LoginForm extends Component {
         this.state = {
             username: '',
             password: '',
+            scoreArr: [],
             redirectTo: null
         }
         this.handleSubmit = this.handleSubmit.bind(this)

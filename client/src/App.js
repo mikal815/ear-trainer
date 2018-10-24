@@ -5,6 +5,8 @@ import BackgroundImage from "./components/BackgroundImage";
 // import PlayBox from "./components/PlayBox";
 import { Container, Row, Col } from "./components/Grid";
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
+import { Redirect } from 'react-router-dom'
+import axios from 'axios'
 
 import Tone from "tone";
 
@@ -25,6 +27,7 @@ class App extends Component {
     this.highScoreFunction = this.highScoreFunction.bind(this);
   }
   state = {
+    username: null,
     winstate: "",
     score: 0,
     timer: 0,
@@ -134,6 +137,7 @@ class App extends Component {
 }
 
   modeHandler(mode) {
+    this.usernameRetriever()
     switch(mode) {
       case "intervals":
           this.songGeneratorEasy()
@@ -262,6 +266,14 @@ class App extends Component {
   
   //Score function. Self explanatory
   scoreFunction = (x) => {
+    if (this.state.currentMode === "") {
+
+      this.setState({
+      currentInput: [],
+      winstate: ""
+    })
+  }
+    else {
     console.log(x)
     this.setState(prevState => ({
       currentInput: [...prevState.currentInput, x],
@@ -290,6 +302,15 @@ class App extends Component {
         }))
       }
     })
+  }
+  }
+
+  usernameRetriever = () => {
+    axios.get('/').then(response => {
+      console.log(response)
+
+    }
+      )
   }
 
   highScoreFunction() {
