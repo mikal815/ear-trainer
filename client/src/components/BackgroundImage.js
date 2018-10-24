@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "./BackgroundImage.css";
-import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
+import { Dropdown, DropdownToggle, DropdownMenu } from "reactstrap";
 
 import MinorSecond from "./MinorSecond";
 import MajorSecond from "./MajorSecond";
@@ -21,10 +21,9 @@ const dropdownBtn = {
   top: "-180px",
   float: "right",
   fontSize: "85%"
-}
+};
 
 class BackgroundImage extends Component {
-
   constructor(props) {
     super(props);
 
@@ -45,7 +44,7 @@ class BackgroundImage extends Component {
       <div className="background">
         <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
           <DropdownToggle caret style={dropdownBtn}>
-            Interval Examples <i className="fas fa-music"></i>
+            Interval Examples <i className="fas fa-music" />
           </DropdownToggle>
           <DropdownMenu>
             <MinorSecond />
@@ -60,7 +59,6 @@ class BackgroundImage extends Component {
             <MinorSeventh />
             <MajorSeventh />
             <Octave />
-
           </DropdownMenu>
         </Dropdown>
       </div>
