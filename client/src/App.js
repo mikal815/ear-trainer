@@ -4,12 +4,9 @@ import Keyboard from "./components/Keyboard";
 import BackgroundImage from "./components/BackgroundImage";
 // import PlayBox from "./components/PlayBox";
 import { Container, Row, Col } from "./components/Grid";
-import {
-  Dropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem
-} from "reactstrap";
+import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
+import { Redirect } from 'react-router-dom'
+import axios from 'axios'
 
 import Tone from "tone";
 
@@ -29,6 +26,7 @@ class App extends Component {
     this.highScoreFunction = this.highScoreFunction.bind(this);
   }
   state = {
+    username: null,
     winstate: "",
     score: 0,
     timer: 0,
@@ -106,7 +104,8 @@ class App extends Component {
       this.setState({
         currentMode: "",
         countdown: 120,
-        currentSong: []
+        currentSong: [],
+        winstate: "Game Finished!"
       });
     }
   };
@@ -136,7 +135,8 @@ class App extends Component {
   };
 
   modeHandler(mode) {
-    switch (mode) {
+    console.log(this.state.username)
+    switch(mode) {
       case "intervals":
         this.songGeneratorEasy();
         break;
@@ -263,14 +263,20 @@ class App extends Component {
   }
 
   //Score function. Self explanatory
-  scoreFunction = x => {
-    console.log(x);
-    this.setState(
-      prevState => ({
-        currentInput: [...prevState.currentInput, x],
-        winstate: ""
-      }),
-      () => {
+  scoreFunction = (x) => {
+    if (this.state.currentMode === "") {
+
+      this.setState({
+      currentInput: [],
+      winstate: ""
+    })
+  }
+    else {
+    console.log(x)
+    this.setState(prevState => ({
+      currentInput: [...prevState.currentInput, x],
+      winstate: ""
+    }), () => {
         var y = this.state.currentInput.length - 1;
         console.log(this.state.currentInput[y], this.state.currentSong[y]);
         if (this.state.currentInput[y] === this.state.currentSong[y]) {
@@ -284,25 +290,42 @@ class App extends Component {
             }));
 
             setTimeout(this.modeHandler(this.state.currentMode), 3000);
-          } else {
-          }
+          } 
         } else {
           this.setState(prevState => ({
             currentInput: [],
             winstate: "Wrong Note!"
           }));
         }
-      }
-    );
-  };
+    })
+  }
+}
+
+
+  usernameRetriever = (username) => {
+    var user = username
+    console.log(user)
+    this.setState({username: user})
+  }
 
   highScoreFunction() {
     var score = this.state.score;
-    //Stick the post for the score here
+    var username = this.state.username;
+    axios.post("/user/scores/", {
+      username: username,
+      score: score})
+      .then(function (response) {
+      axios.get("/user/scores/" + username).then(function (response) {
+        console.log(response)
+      })
+    }).catch(error => {
+      console.log(error.response)
+  })
     //Stick the get for all the scores here
     //Stick the display function for the modal in here
     this.setState({ score: 0 });
   }
+
   render() {
     return (
       <div>
@@ -311,6 +334,7 @@ class App extends Component {
           winstate={this.state.winstate}
           score={this.state.score}
           timer={this.state.countdown}
+          callbackFromParent={this.usernameRetriever}
         >
           <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
             <DropdownToggle caret>Mode</DropdownToggle>
@@ -341,22 +365,6 @@ class App extends Component {
         <Container>
           <Row>
             <Col size="lg-4">
-              {/* <PlayBox /> */}
-
-              {/* <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
-        <DropdownToggle caret>
-          Mode
-        </DropdownToggle>
-        <DropdownMenu>
-          <DropdownItem value={"freeplay"} onClick={this.selectFunction}>Free Play</DropdownItem>
-          <DropdownItem divider />
-          <DropdownItem value={"intervals"} onClick={this.selectFunction}>Intervals</DropdownItem>
-          <DropdownItem divider />
-          <DropdownItem value={"arpeggiosMajor"} onClick={this.selectFunction}>Major Arpeggio</DropdownItem>
-          <DropdownItem divider />
-          <DropdownItem value={"tonerows"} onClick={this.selectFunction}>Tone Rows</DropdownItem>
-        </DropdownMenu>
-      </Dropdown> */}
             </Col>
           </Row>
         </Container>

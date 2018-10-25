@@ -30,13 +30,19 @@ class Login extends Component {
     this.setState(userObject)
   }
 
+  handleUsernameChange = (username) => {
+    console.log(username)
+    this.props.handleUsernameChange(username)
+  }
+
+
   getUser() {
     axios.get('/user/').then(response => {
       console.log('Get user response: ')
       console.log(response.data)
       if (response.data.user) {
         console.log('Get User: There is a user saved in the server session: ')
-
+        this.props.handleUsernameChange(response.data.user.username)
         this.setState({
           loggedIn: true,
           username: response.data.user.username
@@ -68,6 +74,7 @@ class Login extends Component {
           path="/login"
           render={() =>
             <LoginForm
+            handleUsernameChange={this.handleUsernameChange}
               updateUser={this.updateUser}
             />}
         />

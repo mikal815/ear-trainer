@@ -1,16 +1,66 @@
-import React from "react";
+import React, { Component } from "react";
 import Login from '../Login/Login'
 import './Header.css'
 
-const Header = props => {
-  const { branding } = props;
-  const { score } = props;
-  const {winstate} = props;
-  
+class Header extends Component {
+
   
 
-  return (
 
+  handleUsernameChange = (username) => {
+    console.log(username)
+    this.props.callbackFromParent(username)
+  }
+
+
+  render() {
+    const { branding } = this.props;
+    const { score } = this.props;
+    const { winstate } = this.props;
+    const { timer } = this.props;
+    const { children } = this.props;
+    return (
+//       <nav className="navbar navbar-expand-sm navbar-dark py-2">
+//         <div className="container">
+//           <a href="/" className="navbar-brand">
+//             {branding}
+//           </a>
+//           <NavbarToggler onClick={this.toggle} />
+//           <Collapse isOpen={this.state.isOpen} navbar>
+//             <Nav className="ml-auto" navbar>
+//               <ul className="navbar-nav mr-auto">
+//                 <li className="nav-item">
+//                   <a href="/" className="nav-link">
+//                     {timer}
+//                   </a>
+//                 </li>
+//                 <li className="nav-item">
+//                   <a href="/" style={{ color: "red" }} className="nav-link">
+//                     {winstate}
+//                   </a>
+//                 </li>
+//                 <li className="nav-item">{children}</li>
+//                 <li className="nav-item">
+//                   <a href="/" className="nav-link">
+//                     Score: {score}
+//                   </a>
+//                 </li>
+
+//                 <li>
+//                   <Login handleUsernameChange={this.handleUsernameChange} />
+//                 </li>
+//               </ul>
+//             </Nav>
+//           </Collapse>
+//         </div>
+//       </nav>
+//     );
+//   }
+//   };
+  
+//   Header.defaultProps = {
+//     branding: "Music To My Ears",
+// =======
     
     <div className="row topbar align-items-center text-center justify-content-center">
     
@@ -24,7 +74,7 @@ const Header = props => {
     
     <div className="col-3 col-sm-3 col-md-3 col-lg-1">
     <a href="/" style={{"color": "#000000"}} className="title">
-    {props.timer}
+    {timer}
     </a>
     </div>
     
@@ -35,7 +85,7 @@ const Header = props => {
     </div>
     
     <div className="col-3 col-sm-3 col-md-3 col-lg-2" style={{"color": "#000000"}}>
-    {props.children}
+    {children}
     </div>
     
     <div className="col-3 col-sm-3 col-md-3 col-lg-1">
@@ -46,13 +96,14 @@ const Header = props => {
     
 
     <div className="col-12 col-sm-12 col-md-12 col-lg-3" style={{}}>
-    <Login></Login>
+    <Login handleUsernameChange={this.handleUsernameChange} ></Login>
     </div>
     
   </div>
   
     );
   };
+}
   
   Header.defaultProps = {
     branding: "Music to My Ears",
@@ -60,4 +111,3 @@ const Header = props => {
   };
   
   export default Header;
-  

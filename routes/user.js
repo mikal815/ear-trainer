@@ -65,4 +65,26 @@ router.post('/logout', (req, res) => {
     }
 })
 
+router.post('/scores/', (req, res) => {
+    User.findOneAndUpdate({ username: req.body.username }, { $push: {scoreArr: req.body.score} }, (err) => {
+        if (err) {
+            console.log('User.js post error: ', err)
+        } else {
+            res.send("score posted!")
+        }
+
+})
+})
+
+router.get('/scores/:user', (req, res) => {
+    User.findOne({ username: req.params.user }, (err, res) => {
+        if (err) {
+            console.log('User.js post error: ', err)
+        } else {
+            scoreArr => res.json(scoreArr)
+        }
+
+})
+})
+
 module.exports = router

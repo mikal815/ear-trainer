@@ -8,6 +8,7 @@ class LoginForm extends Component {
         this.state = {
             username: '',
             password: '',
+            scoreArr: [],
             redirectTo: null
         }
         this.handleSubmit = this.handleSubmit.bind(this)
@@ -24,7 +25,6 @@ class LoginForm extends Component {
     handleSubmit(event) {
         event.preventDefault()
         console.log('handleSubmit')
-
         axios
             .post('/user/login', {
                 username: this.state.username,
@@ -32,6 +32,8 @@ class LoginForm extends Component {
             })
             .then(response => {
                 console.log('login response: ')
+                console.log(this.state.username)
+                this.props.handleUsernameChange(this.state.username)
                 console.log(response)
                 if (response.status === 200) {
                     // update App.js state
