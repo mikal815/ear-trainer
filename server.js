@@ -22,7 +22,7 @@ app.use(express.json());
 
 // Serve up static assets
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static("client/build"));
+  app.use(express.static("client/public"));
 }
 
 // Add routes, both API and view
@@ -30,7 +30,7 @@ app.use("/api/scores", scores);
 
 
 app.use('*', (request, response) => {
-	response.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+	response.sendFile(path.join(__dirname, 'client/public', 'index.html'));
 });
 
 
