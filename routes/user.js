@@ -65,26 +65,47 @@ router.post('/logout', (req, res) => {
     }
 })
 
-router.post('/scores/', (req, res) => {
-    User.findOneAndUpdate({ username: req.body.username }, { $push: {scoreArr: req.body.score} }, (err) => {
+router.post('/scoresIntervals', (req, res) => {
+    User.findOneAndUpdate({ username: req.body.username }, { $push: {scoreArrIntervals: req.body.score}}, {new: true}, (err, response) => {
         if (err) {
             console.log('User.js post error: ', err)
         } else {
-            res.send("score posted!")
+            response.scoreArr = response.scoreArrIntervals
+            console.log(response)
+            res.json(response)
         }
-
 })
 })
 
-router.get('/scores/:user', (req, res) => {
-    User.findOne({ username: req.params.user }, (err, res) => {
+router.post('/scoresArpeggiosMajor', (req, res) => {
+    User.findOneAndUpdate({ username: req.body.username }, { $push: {scoreArrArpeggiosMajor: req.body.score}}, {new: true}, (err, response) => {
         if (err) {
             console.log('User.js post error: ', err)
         } else {
-            scoreArr => res.json(scoreArr)
+            res.json(response)
         }
+})
+})
 
+router.post('/scoresTonerows', (req, res) => {
+    User.findOneAndUpdate({ username: req.body.username }, { $push: {scoreArrTonerows: req.body.score}}, {new: true}, (err, response) => {
+        if (err) {
+            console.log('User.js post error: ', err)
+        } else {
+            res.json(response)
+        }
 })
 })
+
+// router.get('/scores', (req, res) => {
+//     // User.findOne({ username: "Boar" }, (err, res) => {
+//     //     if (err) {
+//     //         console.log('User.js post error: ', err)
+//     //     } else {
+//             res.send("score retrieved!")
+//         // }
+
+// // })
+// })
 
 module.exports = router
