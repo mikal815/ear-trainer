@@ -56,8 +56,9 @@ class LoginForm extends Component {
             return <Redirect to={{ pathname: this.state.redirectTo }} />
         } else {
             return (
-                <div>
-                    <h4>Login</h4>
+                <div className="row justify-content-center">
+                    <div>
+                    <h4 className="col-7-auto">Login</h4>
                     <form className="form-horizontal">
                         <div className="form-group">
                             <div className="col-1 col-mr-auto">
@@ -89,14 +90,15 @@ class LoginForm extends Component {
                             </div>
                         </div>
                         <div className="form-group ">
-                            <div className="col-7"></div>
+                            <div className="col-1 col-mr-auto"></div>
                             <button
-                                className="btn btn-primary col-4 col-mr-auto"
+                                className="btn btn-primary col-5 col-mr-auto"
                                
                                 onClick={this.handleSubmit}
                                 type="submit">Login</button>
                         </div>
                     </form>
+                </div>
                 </div>
             )
         }
