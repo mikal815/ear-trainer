@@ -29,7 +29,7 @@ if (process.env.NODE_ENV === "production") {
 app.use("/api/scores", scores);
 
 
-app.use('*', (request, response) => {
+app.get('*', (request, response) => {
 	response.sendFile(path.join(__dirname, 'client/public', 'index.html'));
 });
 
