@@ -102,10 +102,8 @@ class App extends Component {
       clearInterval(this.timer);
       this.highScoreFunction();
       this.setState({
-        currentMode: "",
         countdown: 120,
-        currentSong: [],
-        winstate: "Game Finished!"
+        currentSong: []
       });
     }
   };
@@ -123,7 +121,7 @@ class App extends Component {
       currentMode: event.target.value
     });
     this.modeHandler(event.target.value);
-    if (event.target.value !== "freeplay") {
+    if (event.target.value !== "Freeplay") {
       this.startTimer();
     } else {
       clearInterval(this.timer);
@@ -137,13 +135,13 @@ class App extends Component {
   modeHandler(mode) {
     console.log(this.state.username)
     switch(mode) {
-      case "intervals":
+      case "Intervals":
         this.songGeneratorEasy();
         break;
-      case "arpeggiosMajor":
+      case "ArpeggiosMajor":
         this.songGeneratorArpeggio();
         break;
-      case "tonerows":
+      case "Tonerows":
         this.songGeneratorHard();
         break;
       default:
@@ -305,24 +303,41 @@ class App extends Component {
   usernameRetriever = (username) => {
     var user = username
     console.log(user)
-    this.setState({username: user})
+    this.setState({username: user})  
   }
 
   highScoreFunction() {
     var score = this.state.score;
     var username = this.state.username;
-    axios.post("/user/scores/", {
+    axios.post("/user/scores" + this.state.currentMode, {
       username: username,
-      score: score})
-      .then(function (response) {
-      axios.get("/user/scores/" + username).then(function (response) {
-        console.log(response)
-      })
-    }).catch(error => {
+      score: score}).then(function (response) {  
+        console.log(this.state.currentMode)
+        switch(this.state.currentMode) {
+          case "Intervals":
+            var scoreArr = response.data.scoreArrIntervals
+            console.log(scoreArr)
+            break;
+          case "ArpeggiosMajor":
+            var scoreArr = response.data.scoreArrArpeggiosMajor
+            console.log(scoreArr)
+            break;
+          case "Tonerows":
+            var scoreArr = response.data.scoreArrTonerows
+            console.log(scoreArr)
+            break;
+          default:
+            var scoreArr = []
+            console.log(scoreArr)
+            break;
+        }
+        console.log(scoreArr)
+        var hiscore = Math.max.apply(null, scoreArr)
+        console.log(hiscore)
+        this.setState({ winstate: "Best Score: " + hiscore, currentMode: "", });}.bind(this)
+    ).catch(error => {
       console.log(error.response)
   })
-    //Stick the get for all the scores here
-    //Stick the display function for the modal in here
     this.setState({ score: 0 });
   }
 
@@ -339,22 +354,22 @@ class App extends Component {
           <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
             <DropdownToggle caret>Mode</DropdownToggle>
             <DropdownMenu>
-              <DropdownItem value={"freeplay"} onClick={this.selectFunction}>
+              <DropdownItem value={"Freeplay"} onClick={this.selectFunction}>
                 Free Play
               </DropdownItem>
               <DropdownItem divider />
-              <DropdownItem value={"intervals"} onClick={this.selectFunction}>
+              <DropdownItem value={"Intervals"} onClick={this.selectFunction}>
                 Intervals
               </DropdownItem>
               <DropdownItem divider />
               <DropdownItem
-                value={"arpeggiosMajor"}
+                value={"ArpeggiosMajor"}
                 onClick={this.selectFunction}
               >
                 Major Arpeggio
               </DropdownItem>
               <DropdownItem divider />
-              <DropdownItem value={"tonerows"} onClick={this.selectFunction}>
+              <DropdownItem value={"Tonerows"} onClick={this.selectFunction}>
                 Tone Rows
               </DropdownItem>
             </DropdownMenu>

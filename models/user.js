@@ -8,7 +8,9 @@ const userSchema = new Schema({
 
 	username: { type: String, unique: false, required: false },
 	password: { type: String, unique: false, required: false },
-	scoreArr: []
+	scoreArrIntervals: [],
+	scoreArrArpeggiosMajor: [],
+	scoreArrTonerows: []
 
 })
 
