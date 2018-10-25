@@ -14,7 +14,8 @@ import {
 
 class Header extends Component {
   state = {
-    isOpen: false
+    isOpen: false,
+    username: ''
   };
 
   toggle = () => {
@@ -22,6 +23,12 @@ class Header extends Component {
       isOpen: !this.state.isOpen
     });
   };
+
+  handleUsernameChange = (username) => {
+    console.log(username)
+    this.props.callbackFromParent(username)
+  }
+
 
   render() {
     const { branding } = this.props;
@@ -57,7 +64,7 @@ class Header extends Component {
                 </li>
 
                 <li>
-                  <Login />
+                  <Login handleUsernameChange={this.handleUsernameChange} username={this.username} />
                 </li>
               </ul>
             </Nav>
