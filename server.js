@@ -22,7 +22,7 @@ app.use(express.json());
 
 // Serve up static assets
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static("client/public"));
+  app.use(express.static("client/build"));
 }
 
 // Add routes, both API and view
@@ -30,7 +30,7 @@ app.use("/api/scores", scores);
 
 
 app.get('*', (request, response) => {
-	response.sendFile(path.join(__dirname, 'client/public', 'index.html'));
+	response.sendFile(path.join(__dirname, 'client/build/index.html'));
 });
 
 
@@ -90,12 +90,3 @@ app.listen(PORT, () =>
 
 
 module.exports = mongoose.connection
-
-
-
-
-
-
-
-
-
