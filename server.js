@@ -2,6 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const scores = require("./routes/api/scores");
+const path = require('path')
 
 
 const morgan = require('morgan')
