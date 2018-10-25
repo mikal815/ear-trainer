@@ -4,7 +4,8 @@ mongoose.Promise = global.Promise
 
 //our local database url
 //mongoDB port
-const uri = 'mongodb://localhost/scores' 
+const uri = process.env.MONGODB_URI || 'mongodb://localhost/scores' 
+
 
 mongoose.connect(uri).then(
     () => { 
