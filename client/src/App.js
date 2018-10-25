@@ -104,7 +104,8 @@ class App extends Component {
       this.setState({
         currentMode: "",
         countdown: 120,
-        currentSong: []
+        currentSong: [],
+        winstate: "Game Finished!"
       });
     }
   };
@@ -314,7 +315,9 @@ class App extends Component {
       username: username,
       score: score})
       .then(function (response) {
-      console.log(response)
+      axios.get("/user/scores/" + username).then(function (response) {
+        console.log(response)
+      })
     }).catch(error => {
       console.log(error.response)
   })

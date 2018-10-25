@@ -81,7 +81,7 @@ router.get('/scores/:user', (req, res) => {
         if (err) {
             console.log('User.js post error: ', err)
         } else {
-            scores => res.json(scores)
+            scoreArr => res.json(scoreArr)
         }
 
 })
