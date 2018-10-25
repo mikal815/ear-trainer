@@ -12,40 +12,40 @@ const Header = props => {
   return (
 
     
-    <div className="row topbar align-items-center">
+    <div className="row topbar align-items-center text-center justify-content-center">
     
     
     
-    <div className="col-sm-4">
+    <div className="col-12 col-sm-12 col-md-12 col-lg-3">
       <a href="/" style={{"color": "#000000", "font-weight": "bold"}} className="title">
        {branding}
       </a>
     </div>  
     
-    <div className="col">
+    <div className="col-3 col-sm-3 col-md-3 col-lg-1">
     <a href="/" style={{"color": "#000000"}} className="title">
     {props.timer}
     </a>
     </div>
     
-    <div className="col">
-    <a href="/" style={{"color": "#000000"}} className="title">
+    <div className="col-3 col-sm-3 col-md-3 col-lg-2">
+    <a href="/" style={{"color": "#000000", "border-style": "inset", "border-width": "1px"}} className="title">
     {winstate}
     </a>
     </div>
     
-    <div className="col title" style={{"color": "#000000"}}>
+    <div className="col-3 col-sm-3 col-md-3 col-lg-2" style={{"color": "#000000"}}>
     {props.children}
     </div>
     
-    <div className="col">
+    <div className="col-3 col-sm-3 col-md-3 col-lg-1">
     <a href="/" style={{"color": "#000000"}} className="title">
     Score: {score}
     </a>
     </div>
     
 
-    <div className="col" style={{}}>
+    <div className="col-12 col-sm-12 col-md-12 col-lg-3" style={{}}>
     <Login></Login>
     </div>
     

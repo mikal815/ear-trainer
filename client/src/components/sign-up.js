@@ -50,8 +50,9 @@ class Signup extends Component {
 
 render() {
 	return (
+		<div className="row justify-content-center text-center">
 		<div className="SignupForm">
-			<h4 className="col-7 col-ml-auto">Sign up</h4>
+			<h4 className="col-7-auto">Sign up</h4>
 			<form className="form-horizontal">
 				<div className="form-group">
 					<div className="col-1 col-mr-auto">
@@ -91,6 +92,7 @@ render() {
 					>Sign up</button>
 				</div>
 			</form>
+		</div>
 		</div>
 
 	)

@@ -31,10 +31,10 @@ class Navbar extends Component {
         console.log(this.props);
         
         return (
-            <div>
+            <div className="">
 
-                <header className="navbar App-header" id="nav-container">
-                    <div className="col-4" >
+                <header className="navbar App-header justify-content-center" id="nav-container">
+                    <div className="" >
                         {loggedIn ? (
                             <section className="navbar-section">
                                 <Link to="#" className="btn btn-link text-secondary" onClick={this.logout}>
