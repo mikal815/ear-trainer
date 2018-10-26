@@ -24,6 +24,7 @@ class App extends Component {
     this.toggle = this.toggle.bind(this);
     this.selectFunction = this.selectFunction.bind(this);
     this.highScoreFunction = this.highScoreFunction.bind(this);
+    this.modeHandler = this.modeHandler.bind(this);
   }
   state = {
     username: null,
@@ -133,6 +134,24 @@ class App extends Component {
   };
 
   modeHandler(mode) {
+    console.log(this.state.username)
+    this.setState({score: 0})
+    switch(mode) {
+      case "Intervals":
+        this.songGeneratorEasy();
+        break;
+      case "ArpeggiosMajor":
+        this.songGeneratorArpeggio();
+        break;
+      case "Tonerows":
+        this.songGeneratorHard();
+        break;
+      default:
+        break;
+    }
+  }
+
+  modeHandler2(mode) {
     console.log(this.state.username)
     switch(mode) {
       case "Intervals":
@@ -287,7 +306,7 @@ class App extends Component {
               winstate: "Success!"
             }));
 
-            setTimeout(this.modeHandler(this.state.currentMode), 3000);
+            setTimeout(this.modeHandler2(this.state.currentMode), 3000);
           } 
         } else {
           this.setState(prevState => ({
