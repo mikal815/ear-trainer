@@ -5,7 +5,7 @@ Designed with React.js, sign up or log in to play our game which stores user inf
 Gain as many points as possible in the allotted time frame (120 seconds) by playing back the correct sequence of notes that 
 are randomly generated from the npm package, "tone.js".
 
-For a deeper understanding, select the interval box in the top left corner for example of different intervales, i.e. Ascending
+For a deeper understanding, select the interval box in the top left corner for example of different intervals, i.e. Ascending
 Minor Second Songs such as the theme song to "Jaws" or "White Christmas."
 
 
