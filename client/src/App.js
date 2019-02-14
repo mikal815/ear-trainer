@@ -89,7 +89,7 @@ class App extends Component {
   startTimer() {
     clearInterval(this.timer);
     this.setState({
-      countdown: 120
+      countdown: 90
     });
     this.timer = setInterval(this.timerFunction, 1000);
   }
@@ -148,12 +148,14 @@ class App extends Component {
         this.songGeneratorHard();
         break;
       default:
+      this.setState({score: 0})
         break;
     }
   }
 
   modeHandler2(mode) {
     console.log(this.state.username)
+    this.setState({score: 0})
     switch(mode) {
       case "Intervals":
         this.songGeneratorEasy();
