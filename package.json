@@ -13,14 +13,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mikal815/ear-trainer.git"
+    "url": "git+https://github.com/szsaunders/ear-trainer.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/mikal815/ear-trainer/issues"
+    "url": "https://github.com/szsaunders/ear-trainer/issues"
   },
-  "homepage": "https://github.com/mikal815/ear-trainer#readme",
+  "homepage": "https://github.com/szsaunders/ear-trainer#readme",
   "dependencies": {
     "axios": "^0.18.0",
     "bcryptjs": "^2.4.3",
