@@ -32,7 +32,7 @@ class App extends Component {
     score: 0,
     timer: 0,
     dropdownOpen: false,
-    countdown: 120,
+    countdown: 90,
     currentSong: [],
     currentInput: [],
     currentMode: "",
@@ -103,7 +103,7 @@ class App extends Component {
       clearInterval(this.timer);
       this.highScoreFunction();
       this.setState({
-        countdown: 120,
+        countdown: 90,
         currentSong: []
       });
     }
@@ -129,7 +129,7 @@ class App extends Component {
       clearInterval(this.timer);
       this.setState({
         currentMode: "",
-        countdown: 120
+        countdown: 90
       });
     }
   };
