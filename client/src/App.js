@@ -117,7 +117,8 @@ class App extends Component {
   }
 
   selectFunction = event => {
-    console.log(event.target.value);
+    this.setState({ score: 0 });
+    // console.log(event.target.value);
     this.setState({
       currentMode: event.target.value
     });
