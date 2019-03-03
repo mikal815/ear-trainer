@@ -137,6 +137,7 @@ class App extends Component {
   modeHandler(mode) {
     console.log(this.state.username)
     this.setState({score: 0})
+    this.setState({ activeNotesIndex: 0 });
     switch(mode) {
       case "Intervals":
         this.songGeneratorEasy();
