@@ -23,14 +23,16 @@ const Keyboard = props => (
   <div className="container" style={{ width: "100%", height: "auto", margin: 0, padding: "0" }}>
     <Piano
       noteRange={{ first: firstNote, last: lastNote }}
+      activeNotes={
+        this.state.isPlaying ? this.props.currentSong[this.state.activeNotesIndex] : []
+      }
       playNote={midiNumber => {
         var x = Tone.Frequency(midiNumber, "midi").toNote();
         synth.triggerAttack(x);
         // Play a given note - e notes below
       }}
       onPlayNoteInput={midiNumber => {
-        var x = Tone.Frequency(midiNumber, "midi").toNote();
-        props.scorekeeper(x);
+        props.scorekeeper(midiNumber);
       }}
       stopNote={midiNumber => {
         synth.triggerRelease();

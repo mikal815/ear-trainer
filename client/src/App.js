@@ -25,6 +25,7 @@ class App extends Component {
     this.selectFunction = this.selectFunction.bind(this);
     this.highScoreFunction = this.highScoreFunction.bind(this);
     this.modeHandler = this.modeHandler.bind(this);
+    this.playbackIntervalFn = null;
   }
   state = {
     username: null,
@@ -36,33 +37,9 @@ class App extends Component {
     currentSong: [],
     currentInput: [],
     currentMode: "",
-    winSize: window.innerWidth,
-    fullKeyboardArray: [
-      "C3",
-      "C#3",
-      "D3",
-      "D#3",
-      "E3",
-      "F3",
-      "F#3",
-      "G3",
-      "G#3",
-      "A3",
-      "A#3",
-      "B3",
-      "C4",
-      "C#4",
-      "D4",
-      "D#4",
-      "E4",
-      "F4",
-      "F#4",
-      "G4",
-      "G#4",
-      "A4",
-      "A#4",
-      "B4"
-    ]
+    activeNotesIndex: 0,
+    isPlaying: false,
+    winSize: window.innerWidth
   };
 
   //Component mount/unmount functions
@@ -82,6 +59,29 @@ class App extends Component {
     this.setState({
       winSize: window.innerWidth
     });
+  }
+
+  //Handles keyboard playback
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.isPlaying !== this.state.isPlaying) {
+      if (this.state.isPlaying) {
+        this.playbackIntervalFn = setInterval(() => {
+          if (this.state.activeNotesIndex < this.state.currentSong.length) {
+          this.setState({
+            activeNotesIndex: (this.state.activeNotesIndex + 1),
+          });
+        }
+        else {
+          clearInterval(this.playbackIntervalFn);
+          this.setState({
+            activeNotesIndex: 0,
+          });
+        }
+        
+        }, 200);
+     } 
+    }
   }
 
   //Handles timer
@@ -182,104 +182,40 @@ class App extends Component {
     return a;
   }
 
+  midiArrayGenerator(size) {
+  return [...Array(size).keys()].map(i => [i + 48])
+  }
+
   songGeneratorEasy = () => {
-    const toneArray = this.state.fullKeyboardArray.slice(1, 13);
+    const toneArray = this.midiArrayGenerator(13)
     console.log(toneArray);
-    var synth = new Tone.Synth({
-      oscillator: {
-        type: "triangle",
-        modulationFrequency: 0.2
-      },
-      envelope: {
-        attack: 0.02,
-        decay: 0.1,
-        sustain: 0.2,
-        release: 0.3
-      }
-    }).toMaster();
     let tempArray = this.shuffle(toneArray);
-    let tempArray2 = ["C3", tempArray[1]];
+    let tempArray2 = [[48], tempArray[1]];
     console.log(tempArray2);
-    var n = 1;
-    for (var i = 0; i < tempArray2.length; i++) {
-      console.log(tempArray2[i]);
-      var m = "+" + n;
-      console.log(m);
-      synth.triggerAttackRelease(tempArray2[i], 1, m);
-      n = n + 1;
-    }
     this.setState({ currentSong: tempArray2 });
+    this.setState({ isPlaying: true });
   };
 
   songGeneratorArpeggio = () => {
-    let baseNote = Math.floor(Math.random() * 11);
+    let baseNote = Math.floor(Math.random() * 11) + 48;
     let toneArray = [
-      this.state.fullKeyboardArray[baseNote],
-      this.state.fullKeyboardArray[baseNote + 4],
-      this.state.fullKeyboardArray[baseNote + 7]
+      [baseNote],
+      [baseNote + 4],
+      [baseNote + 7]
     ];
-    var synth = new Tone.Synth({
-      oscillator: {
-        type: "triangle",
-        modulationFrequency: 0.2
-      },
-      envelope: {
-        attack: 0.02,
-        decay: 0.1,
-        sustain: 0.2,
-        release: 0.3
-      }
-    }).toMaster();
-    toneArray.push();
     console.log(toneArray);
-    var n = 1;
-    for (var i = 0; i < toneArray.length; i++) {
-      var m = "+" + n;
-      console.log(m);
-      console.log(toneArray[i]);
-      synth.triggerAttackRelease(toneArray[i], 1, m);
-      n = n + 1;
-    }
     this.setState({ currentSong: toneArray });
+    this.setState({ isPlaying: true });
   };
 
   songGeneratorHard = () => {
-    const toneArray = this.state.fullKeyboardArray.slice(0, 12);
-    var synth = new Tone.Synth({
-      oscillator: {
-        type: "triangle",
-        modulationFrequency: 0.2
-      },
-      envelope: {
-        attack: 0.02,
-        decay: 0.1,
-        sustain: 0.2,
-        release: 0.3
-      }
-    }).toMaster();
+    const toneArray = this.midiArrayGenerator(13)
     let tempArray = this.shuffle(toneArray);
     console.log(tempArray);
-    var n = 1;
-    for (var i = 0; i < tempArray.length; i++) {
-      var m = "+" + n;
-      console.log(m);
-      console.log(tempArray[i]);
-      synth.triggerAttackRelease(tempArray[i], 1, m);
-      n = n + 1;
-    }
     this.setState({ currentSong: tempArray });
+    this.setState({ isPlaying: true });
   };
 
-  //Currently not in use, but will probably incorporate into later model.
-  repeatSong() {
-    var n = 1;
-    var synth = new Tone.Synth().toMaster();
-    for (var i = 0; i < this.setState.currentSong.length; i++) {
-      console.log(this.setState.currentSong[i]);
-      synth.triggerAttackRelease(this.setState.currentSong[i], 0.5, n);
-      n++;
-    }
-  }
 
   //Score function. Self explanatory
   scoreFunction = (x) => {
@@ -293,7 +229,7 @@ class App extends Component {
     else {
     console.log(x)
     this.setState(prevState => ({
-      currentInput: [...prevState.currentInput, x],
+      currentInput: [...prevState.currentInput, [x]],
       winstate: ""
     }), () => {
         var y = this.state.currentInput.length - 1;
