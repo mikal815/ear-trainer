@@ -13,9 +13,9 @@ var synth = new Tone.Synth({
 	},
 	"envelope" : {
 		"attack" : 0.02,
-		"decay" : 0.1,
-		"sustain" : 0.2,
-		"release" : 0.3,
+		"decay" : 20,
+		"sustain" : 20,
+		"release" : .6,
 	}
 }).toMaster();
 
@@ -24,11 +24,12 @@ const Keyboard = props => (
     <Piano
       noteRange={{ first: firstNote, last: lastNote }}
       activeNotes={
-        this.state.isPlaying ? this.props.currentSong[this.state.activeNotesIndex] : []
+        props.isPlaying ? props.currentSong[props.activeNotesIndex] : null
       }
+      // activeNotes={props.currentSong[props.activeNotesIndex]}
       playNote={midiNumber => {
         var x = Tone.Frequency(midiNumber, "midi").toNote();
-        synth.triggerAttack(x);
+        synth.triggerAttackRelease(x, "16n");
         // Play a given note - e notes below
       }}
       onPlayNoteInput={midiNumber => {

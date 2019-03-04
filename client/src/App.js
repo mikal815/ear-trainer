@@ -32,12 +32,14 @@ class App extends Component {
     winstate: "",
     score: 0,
     timer: 0,
+    n: 0,
     dropdownOpen: false,
     countdown: 90,
     currentSong: [],
+    currentSongHolder: [],
     currentInput: [],
     currentMode: "",
-    activeNotesIndex: 0,
+    activeNotesIndex: -1,
     isPlaying: false,
     winSize: window.innerWidth
   };
@@ -65,24 +67,46 @@ class App extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (prevState.isPlaying !== this.state.isPlaying) {
+    console.log(this.state.currentSongHolder)
       if (this.state.isPlaying) {
+        console.log(this.state.currentSong, this.state.currentSong.length)
         this.playbackIntervalFn = setInterval(() => {
-          if (this.state.activeNotesIndex < this.state.currentSong.length) {
+          if (this.state.n < this.state.currentSong.length * 2) {
+            if (this.state.n % 2 === 1) {
           this.setState({
             activeNotesIndex: (this.state.activeNotesIndex + 1),
+            currentSongHolder: this.state.currentSong,
+            n: this.state.n + 1
           });
+          console.log("tick", this.state.currentSong[this.state.activeNotesIndex- 1])
+        }
+        else {
+          this.setState({
+            // activeNotesIndex: (this.state.activeNotesIndex + 1),
+            n: this.state.n + 1,
+            currentSongHolder: []
+          });
+          console.log("tick", this.state.currentSong[this.state.activeNotesIndex- 1])
+        }
         }
         else {
           clearInterval(this.playbackIntervalFn);
           this.setState({
-            activeNotesIndex: 0,
+            isPlaying: false,
+          });
+          this.setState({
+            activeNotesIndex: -1,
+            n: 0,
+            currentSongHolder: []
           });
         }
         
-        }, 200);
+        }, 500);
      } 
     }
   }
+
+  
 
   //Handles timer
 
@@ -137,7 +161,10 @@ class App extends Component {
   modeHandler(mode) {
     console.log(this.state.username)
     this.setState({score: 0})
-    this.setState({ activeNotesIndex: 0 });
+    this.setState({ activeNotesIndex: -1 });
+    this.setState({ isPlaying: false });
+    this.setState({ currentSong: [],
+     currentSongHolder: []});
     switch(mode) {
       case "Intervals":
         this.songGeneratorEasy();
@@ -155,7 +182,8 @@ class App extends Component {
   }
 
   modeHandler2(mode) {
-    console.log(this.state.username)
+    console.log("modehandler2")
+    this.setState({ activeNotesIndex: -1 });
     switch(mode) {
       case "Intervals":
         this.songGeneratorEasy();
@@ -183,17 +211,20 @@ class App extends Component {
     return a;
   }
 
-  midiArrayGenerator(size) {
-  return [...Array(size).keys()].map(i => [i + 48])
+  midiArrayGenerator(size, startAt) {
+    if (!startAt) {
+      var startAt = 48
+    }
+  return [...Array(size).keys()].map(i => [i + startAt])
   }
 
   songGeneratorEasy = () => {
-    const toneArray = this.midiArrayGenerator(13)
-    console.log(toneArray);
+    const toneArray = this.midiArrayGenerator(12, 49)
     let tempArray = this.shuffle(toneArray);
     let tempArray2 = [[48], tempArray[1]];
     console.log(tempArray2);
-    this.setState({ currentSong: tempArray2 });
+    this.setState({ currentSong: tempArray2,
+     });
     this.setState({ isPlaying: true });
   };
 
@@ -235,7 +266,7 @@ class App extends Component {
     }), () => {
         var y = this.state.currentInput.length - 1;
         console.log(this.state.currentInput[y], this.state.currentSong[y]);
-        if (this.state.currentInput[y] === this.state.currentSong[y]) {
+        if (this.state.currentInput[y][0] === this.state.currentSong[y][0]) {
           if (
             this.state.currentInput.length === this.state.currentSong.length
           ) {
@@ -245,7 +276,7 @@ class App extends Component {
               winstate: "Success!"
             }));
 
-            setTimeout(this.modeHandler2(this.state.currentMode), 3000);
+            setTimeout(() => this.modeHandler2(this.state.currentMode), 1000);
           } 
         } else {
           this.setState(prevState => ({
@@ -334,7 +365,9 @@ class App extends Component {
           </Dropdown>
         </Header>
         <BackgroundImage />
-        <Keyboard width={this.state.winSize} scorekeeper={this.scoreFunction} />
+        <Keyboard width={this.state.winSize} scorekeeper={this.scoreFunction} 
+        isPlaying={this.state.isPlaying} currentSong={this.state.currentSongHolder} activeNotesIndex = {this.state.activeNotesIndex}
+        />
         <Container>
           <Row>
             <Col size="lg-4">
