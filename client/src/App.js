@@ -25,44 +25,23 @@ class App extends Component {
     this.selectFunction = this.selectFunction.bind(this);
     this.highScoreFunction = this.highScoreFunction.bind(this);
     this.modeHandler = this.modeHandler.bind(this);
+    this.playbackIntervalFn = null;
   }
   state = {
     username: null,
     winstate: "",
     score: 0,
     timer: 0,
+    n: 0,
     dropdownOpen: false,
-    countdown: 120,
+    countdown: 90,
     currentSong: [],
+    currentSongHolder: [],
     currentInput: [],
     currentMode: "",
-    winSize: window.innerWidth,
-    fullKeyboardArray: [
-      "C3",
-      "C#3",
-      "D3",
-      "D#3",
-      "E3",
-      "F3",
-      "F#3",
-      "G3",
-      "G#3",
-      "A3",
-      "A#3",
-      "B3",
-      "C4",
-      "C#4",
-      "D4",
-      "D#4",
-      "E4",
-      "F4",
-      "F#4",
-      "G4",
-      "G#4",
-      "A4",
-      "A#4",
-      "B4"
-    ]
+    activeNotesIndex: -1,
+    isPlaying: false,
+    winSize: window.innerWidth
   };
 
   //Component mount/unmount functions
@@ -84,12 +63,57 @@ class App extends Component {
     });
   }
 
+  //Handles keyboard playback
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.isPlaying !== this.state.isPlaying) {
+    console.log(this.state.currentSongHolder)
+      if (this.state.isPlaying) {
+        console.log(this.state.currentSong, this.state.currentSong.length)
+        this.playbackIntervalFn = setInterval(() => {
+          if (this.state.n < this.state.currentSong.length * 2) {
+            if (this.state.n % 2 === 1) {
+          this.setState({
+            activeNotesIndex: (this.state.activeNotesIndex + 1),
+            currentSongHolder: this.state.currentSong,
+            n: this.state.n + 1
+          });
+          console.log("tick", this.state.currentSong[this.state.activeNotesIndex- 1])
+        }
+        else {
+          this.setState({
+            // activeNotesIndex: (this.state.activeNotesIndex + 1),
+            n: this.state.n + 1,
+            currentSongHolder: []
+          });
+          console.log("tick", this.state.currentSong[this.state.activeNotesIndex- 1])
+        }
+        }
+        else {
+          clearInterval(this.playbackIntervalFn);
+          this.setState({
+            isPlaying: false,
+          });
+          this.setState({
+            activeNotesIndex: -1,
+            n: 0,
+            currentSongHolder: []
+          });
+        }
+        
+        }, 500);
+     } 
+    }
+  }
+
+  
+
   //Handles timer
 
   startTimer() {
     clearInterval(this.timer);
     this.setState({
-      countdown: 120
+      countdown: 90
     });
     this.timer = setInterval(this.timerFunction, 1000);
   }
@@ -103,7 +127,7 @@ class App extends Component {
       clearInterval(this.timer);
       this.highScoreFunction();
       this.setState({
-        countdown: 120,
+        countdown: 90,
         currentSong: []
       });
     }
@@ -117,7 +141,8 @@ class App extends Component {
   }
 
   selectFunction = event => {
-    console.log(event.target.value);
+    this.setState({ score: 0 });
+    // console.log(event.target.value);
     this.setState({
       currentMode: event.target.value
     });
@@ -128,7 +153,7 @@ class App extends Component {
       clearInterval(this.timer);
       this.setState({
         currentMode: "",
-        countdown: 120
+        countdown: 90
       });
     }
   };
@@ -136,6 +161,10 @@ class App extends Component {
   modeHandler(mode) {
     console.log(this.state.username)
     this.setState({score: 0})
+    this.setState({ activeNotesIndex: -1 });
+    this.setState({ isPlaying: false });
+    this.setState({ currentSong: [],
+     currentSongHolder: []});
     switch(mode) {
       case "Intervals":
         this.songGeneratorEasy();
@@ -147,12 +176,14 @@ class App extends Component {
         this.songGeneratorHard();
         break;
       default:
+      this.setState({score: 0})
         break;
     }
   }
 
   modeHandler2(mode) {
-    console.log(this.state.username)
+    console.log("modehandler2")
+    this.setState({ activeNotesIndex: -1 });
     switch(mode) {
       case "Intervals":
         this.songGeneratorEasy();
@@ -180,104 +211,43 @@ class App extends Component {
     return a;
   }
 
-  songGeneratorEasy = () => {
-    const toneArray = this.state.fullKeyboardArray.slice(1, 13);
-    console.log(toneArray);
-    var synth = new Tone.Synth({
-      oscillator: {
-        type: "triangle",
-        modulationFrequency: 0.2
-      },
-      envelope: {
-        attack: 0.02,
-        decay: 0.1,
-        sustain: 0.2,
-        release: 0.3
-      }
-    }).toMaster();
-    let tempArray = this.shuffle(toneArray);
-    let tempArray2 = ["C3", tempArray[1]];
-    console.log(tempArray2);
-    var n = 1;
-    for (var i = 0; i < tempArray2.length; i++) {
-      console.log(tempArray2[i]);
-      var m = "+" + n;
-      console.log(m);
-      synth.triggerAttackRelease(tempArray2[i], 1, m);
-      n = n + 1;
+  midiArrayGenerator(size, startAt) {
+    if (!startAt) {
+      var startAt = 48
     }
-    this.setState({ currentSong: tempArray2 });
+  return [...Array(size).keys()].map(i => [i + startAt])
+  }
+
+  songGeneratorEasy = () => {
+    const toneArray = this.midiArrayGenerator(12, 49)
+    let tempArray = this.shuffle(toneArray);
+    let tempArray2 = [[48], tempArray[1]];
+    console.log(tempArray2);
+    this.setState({ currentSong: tempArray2,
+     });
+    this.setState({ isPlaying: true });
   };
 
   songGeneratorArpeggio = () => {
-    let baseNote = Math.floor(Math.random() * 11);
+    let baseNote = Math.floor(Math.random() * 11) + 48;
     let toneArray = [
-      this.state.fullKeyboardArray[baseNote],
-      this.state.fullKeyboardArray[baseNote + 4],
-      this.state.fullKeyboardArray[baseNote + 7]
+      [baseNote],
+      [baseNote + 4],
+      [baseNote + 7]
     ];
-    var synth = new Tone.Synth({
-      oscillator: {
-        type: "triangle",
-        modulationFrequency: 0.2
-      },
-      envelope: {
-        attack: 0.02,
-        decay: 0.1,
-        sustain: 0.2,
-        release: 0.3
-      }
-    }).toMaster();
-    toneArray.push();
     console.log(toneArray);
-    var n = 1;
-    for (var i = 0; i < toneArray.length; i++) {
-      var m = "+" + n;
-      console.log(m);
-      console.log(toneArray[i]);
-      synth.triggerAttackRelease(toneArray[i], 1, m);
-      n = n + 1;
-    }
     this.setState({ currentSong: toneArray });
+    this.setState({ isPlaying: true });
   };
 
   songGeneratorHard = () => {
-    const toneArray = this.state.fullKeyboardArray.slice(0, 12);
-    var synth = new Tone.Synth({
-      oscillator: {
-        type: "triangle",
-        modulationFrequency: 0.2
-      },
-      envelope: {
-        attack: 0.02,
-        decay: 0.1,
-        sustain: 0.2,
-        release: 0.3
-      }
-    }).toMaster();
+    const toneArray = this.midiArrayGenerator(13)
     let tempArray = this.shuffle(toneArray);
     console.log(tempArray);
-    var n = 1;
-    for (var i = 0; i < tempArray.length; i++) {
-      var m = "+" + n;
-      console.log(m);
-      console.log(tempArray[i]);
-      synth.triggerAttackRelease(tempArray[i], 1, m);
-      n = n + 1;
-    }
     this.setState({ currentSong: tempArray });
+    this.setState({ isPlaying: true });
   };
 
-  //Currently not in use, but will probably incorporate into later model.
-  repeatSong() {
-    var n = 1;
-    var synth = new Tone.Synth().toMaster();
-    for (var i = 0; i < this.setState.currentSong.length; i++) {
-      console.log(this.setState.currentSong[i]);
-      synth.triggerAttackRelease(this.setState.currentSong[i], 0.5, n);
-      n++;
-    }
-  }
 
   //Score function. Self explanatory
   scoreFunction = (x) => {
@@ -291,12 +261,12 @@ class App extends Component {
     else {
     console.log(x)
     this.setState(prevState => ({
-      currentInput: [...prevState.currentInput, x],
+      currentInput: [...prevState.currentInput, [x]],
       winstate: ""
     }), () => {
         var y = this.state.currentInput.length - 1;
         console.log(this.state.currentInput[y], this.state.currentSong[y]);
-        if (this.state.currentInput[y] === this.state.currentSong[y]) {
+        if (this.state.currentInput[y][0] === this.state.currentSong[y][0]) {
           if (
             this.state.currentInput.length === this.state.currentSong.length
           ) {
@@ -306,7 +276,7 @@ class App extends Component {
               winstate: "Success!"
             }));
 
-            setTimeout(this.modeHandler2(this.state.currentMode), 3000);
+            setTimeout(() => this.modeHandler2(this.state.currentMode), 1000);
           } 
         } else {
           this.setState(prevState => ({
@@ -395,7 +365,9 @@ class App extends Component {
           </Dropdown>
         </Header>
         <BackgroundImage />
-        <Keyboard width={this.state.winSize} scorekeeper={this.scoreFunction} />
+        <Keyboard width={this.state.winSize} scorekeeper={this.scoreFunction} 
+        isPlaying={this.state.isPlaying} currentSong={this.state.currentSongHolder} activeNotesIndex = {this.state.activeNotesIndex}
+        />
         <Container>
           <Row>
             <Col size="lg-4">
