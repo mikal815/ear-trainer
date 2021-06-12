@@ -2,6 +2,9 @@
   "name": "ear-trainer",
   "version": "1.0.0",
   "description": "music training app",
+  "engines": {
+    "node": "14.16.0"
+  },
   "main": "server.js",
   "scripts": {
     "client-install": "npm install --prefix client",
